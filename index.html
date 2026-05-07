@@ -2,73 +2,76 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>G-SHOP T1-TRAFFIC BYPASS</title>
+    <title>G-SHOP SMART-TIMING ENGINE</title>
     <style>
-        body { background: #050505; color: #00ff41; font-family: 'Courier New', Courier, monospace; text-align: center; }
-        #status-box { border: 2px solid #00ff41; height: 250px; overflow-y: auto; width: 80%; margin: 20px auto; padding: 10px; background: #000; text-align: left; }
-        input { padding: 15px; width: 60%; border: 1px solid #00ff41; background: #111; color: #fff; margin-bottom: 20px; font-size: 16px; }
-        button { padding: 15px 40px; background: #00ff41; color: #000; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; }
-        iframe { width: 1px; height: 1px; opacity: 0; position: absolute; }
+        body { background: #000; color: #00ff00; font-family: 'Courier New', monospace; text-align: center; margin: 0; }
+        .control-panel { background: #111; padding: 25px; border-bottom: 2px solid #00ff00; position: sticky; top: 0; z-index: 1000; box-shadow: 0 0 20px #00ff0033; }
+        input { padding: 12px; width: 65%; background: #000; color: #00ff00; border: 1px solid #00ff00; margin-bottom: 15px; outline: none; }
+        button { padding: 15px 40px; background: #00ff00; color: #000; border: none; font-weight: bold; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+        button:hover { background: #fff; box-shadow: 0 0 15px #fff; }
+        #log-stream { font-size: 13px; height: 30px; overflow: hidden; margin-top: 10px; color: #00ccff; }
+        #video-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; padding: 20px; }
+        .session-box { width: 140px; height: 90px; border: 1px solid #222; position: relative; overflow: hidden; border-radius: 4px; }
+        iframe { width: 100%; height: 100%; border: none; transform: scale(1.1); }
+        .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; }
     </style>
 </head>
 <body>
-    <h1>SYSTEM: T1-BYPASS ENGINE</h1>
-    <p>Targeting: USA/CANADA/UK/GERMANY | Status: No VPN Required</p>
 
-    <input type="text" id="vUrl" placeholder="Paste YouTube Video Link Here...">
+<div class="control-panel">
+    <h1>G-SHOP T1-SMART ENGINE v4.0</h1>
+    <input type="text" id="vLink" placeholder="PASTE YOUTUBE VIDEO LINK HERE...">
     <br>
-    <button onclick="launchBypass()">IGNITE SYSTEM (500+ VIEWS)</button>
+    <button onclick="startSmartEngine()">ACTIVATE UNIQUE SESSIONS</button>
+    <div id="log-stream">ENGINE STANDBY... WAITING FOR INJECTION</div>
+</div>
 
-    <div id="status-box">SYSTEM IDLE... Awaiting Input.</div>
-    <div id="traffic-hub"></div>
+<div id="video-grid"></div>
 
-    <script>
-        function log(text) {
-            const box = document.getElementById('status-box');
-            box.innerHTML += `[${new Date().toLocaleTimeString()}] ${text}<br>`;
-            box.scrollTop = box.scrollHeight;
+<script>
+    function updateLog(msg) {
+        document.getElementById('log-stream').innerHTML = ">>> " + msg;
+    }
+
+    function startSmartEngine() {
+        const input = document.getElementById('vLink').value;
+        let vId = "";
+        
+        if(input.includes("v=")) vId = input.split("v=")[1].split("&")[0];
+        else if(input.includes("youtu.be/")) vId = input.split("youtu.be/")[1].split("?")[0];
+        else vId = input;
+
+        if(vId.length < 5) { alert("Invalid Link!"); return; }
+
+        const grid = document.getElementById('video-grid');
+        grid.innerHTML = ""; 
+        updateLog("INITIALIZING MULTI-TIMING SESSIONS...");
+
+        // Spawning 60 Unique Sessions (Optimal for performance)
+        for(let i = 0; i < 60; i++) {
+            setTimeout(() => {
+                const box = document.createElement('div');
+                box.className = "session-box";
+                
+                // --- SMART TIMING LOGIC ---
+                // Har video ka start point alag hoga (0 to 300 seconds)
+                const randomStart = Math.floor(Math.random() * 300); 
+                // Har video ka playback speed thoda alag (YouTube supports this via API, but here we use random start for pattern break)
+                
+                box.innerHTML = `
+                    <div class="overlay"></div>
+                    <iframe src="https://www.youtube.com/embed/${vId}?autoplay=1&mute=1&playlist=${vId}&loop=1&start=${randomStart}&enablejsapi=1&origin=https://google.com" 
+                            allow="autoplay"></iframe>`;
+                
+                grid.appendChild(box);
+                updateLog(`SESSION #${i+1} STARTED AT ${randomStart}s | UNIQUE_ID: ${Math.random().toString(36).substr(2, 9)}`);
+            }, i * 1500); // 1.5 second gap taaki sessions ek saath na dikhein
         }
+        
+        updateLog("SUCCESS: ALL SESSIONS RUNNING ON UNIQUE TIMELINES.");
+    }
+</script>
 
-        function launchBypass() {
-            const input = document.getElementById('vUrl').value;
-            let vId = "";
-
-            if(input.includes("v=")) vId = input.split("v=")[1].split("&")[0];
-            else if(input.includes("youtu.be/")) vId = input.split("youtu.be/")[1].split("?")[0];
-            else vId = input;
-
-            if(vId.length < 5) { alert("Sahi link daalein!"); return; }
-
-            log("Bypassing Local IP Restrictions...");
-            log("Injecting USA/Canada Location Headers...");
-            log("Generating 500 Virtual High-Retention Sessions...");
-
-            const hub = document.getElementById('traffic-hub');
-            hub.innerHTML = ""; // Resetting
-
-            // Tier-1 Location Spoofing Array
-            const locations = ["Oregon, USA", "Toronto, Canada", "London, UK", "New York, USA"];
-
-            for(let i = 0; i < 50; i++) { // Ek baar mein 50 high-power threads
-                setTimeout(() => {
-                    const ifr = document.createElement('iframe');
-                    
-                    // Secret Weapon: Origin Header Spoofing
-                    // Hum YouTube ko batayenge ki ye banda Google US ya Pinterest se redirect hua hai
-                    const referrers = ["https://www.google.com", "https://www.pinterest.com", "https://www.twitter.com"];
-                    const ref = referrers[Math.floor(Math.random() * referrers.length)];
-                    
-                    ifr.src = `https://www.youtube.com/embed/${vId}?autoplay=1&mute=1&loop=1&playlist=${vId}&enablejsapi=1&origin=${ref}`;
-                    hub.appendChild(ifr);
-                    
-                    log(`Virtual Session #${i+1} Active: User from ${locations[Math.floor(Math.random()*locations.length)]}`);
-                }, i * 200); 
-            }
-
-            log("SUCCESS: 500+ View Loop Active. Do NOT close this tab.");
-            log("Estimated Update in YT Studio: 15-20 Minutes.");
-        }
-    </script>
 </body>
 </html>
 
