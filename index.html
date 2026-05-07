@@ -2,76 +2,60 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>G-SHOP SMART-TIMING ENGINE</title>
+    <title>G-SHOP AUTO-TRAFFIC ENGINE</title>
     <style>
-        body { background: #000; color: #00ff00; font-family: 'Courier New', monospace; text-align: center; margin: 0; }
-        .control-panel { background: #111; padding: 25px; border-bottom: 2px solid #00ff00; position: sticky; top: 0; z-index: 1000; box-shadow: 0 0 20px #00ff0033; }
-        input { padding: 12px; width: 65%; background: #000; color: #00ff00; border: 1px solid #00ff00; margin-bottom: 15px; outline: none; }
-        button { padding: 15px 40px; background: #00ff00; color: #000; border: none; font-weight: bold; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
-        button:hover { background: #fff; box-shadow: 0 0 15px #fff; }
-        #log-stream { font-size: 13px; height: 30px; overflow: hidden; margin-top: 10px; color: #00ccff; }
-        #video-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; padding: 20px; }
-        .session-box { width: 140px; height: 90px; border: 1px solid #222; position: relative; overflow: hidden; border-radius: 4px; }
-        iframe { width: 100%; height: 100%; border: none; transform: scale(1.1); }
-        .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; }
+        body { background: #000; color: #00ff00; font-family: 'Courier New', monospace; text-align: center; margin: 0; overflow: hidden; }
+        .main-ui { padding: 50px; border: 2px solid #333; margin: 20px; border-radius: 10px; background: #0a0a0a; }
+        input { padding: 15px; width: 80%; background: #000; color: #00ff00; border: 1px solid #00ff00; margin: 20px 0; font-size: 18px; outline: none; }
+        button { padding: 20px 50px; background: #00ff00; color: #000; border: none; font-weight: bold; cursor: pointer; font-size: 20px; box-shadow: 0 0 20px #00ff00; }
+        #status-monitor { margin-top: 30px; font-size: 14px; color: #888; }
+        #ghost-grid { position: absolute; top: -5000px; left: -5000px; width: 1px; height: 1px; opacity: 0.01; }
     </style>
 </head>
 <body>
 
-<div class="control-panel">
-    <h1>G-SHOP T1-SMART ENGINE v4.0</h1>
-    <input type="text" id="vLink" placeholder="PASTE YOUTUBE VIDEO LINK HERE...">
+<div class="main-ui">
+    <h1>G-SHOP SILENT ENGINE v5.0</h1>
+    <input type="text" id="vUrl" placeholder="PASTE VIDEO LINK AND FORGET...">
     <br>
-    <button onclick="startSmartEngine()">ACTIVATE UNIQUE SESSIONS</button>
-    <div id="log-stream">ENGINE STANDBY... WAITING FOR INJECTION</div>
+    <button onclick="ignite()">START FULL AUTOMATION</button>
+    <div id="status-monitor">SYSTEM STATUS: SLEEPING...</div>
 </div>
 
-<div id="video-grid"></div>
+<div id="ghost-grid"></div>
 
 <script>
-    function updateLog(msg) {
-        document.getElementById('log-stream').innerHTML = ">>> " + msg;
-    }
-
-    function startSmartEngine() {
-        const input = document.getElementById('vLink').value;
+    function ignite() {
+        const url = document.getElementById('vUrl').value;
         let vId = "";
-        
-        if(input.includes("v=")) vId = input.split("v=")[1].split("&")[0];
-        else if(input.includes("youtu.be/")) vId = input.split("youtu.be/")[1].split("?")[0];
-        else vId = input;
+        if(url.includes("v=")) vId = url.split("v=")[1].split("&")[0];
+        else if(url.includes("youtu.be/")) vId = url.split("youtu.be/")[1].split("?")[0];
+        else vId = url;
 
-        if(vId.length < 5) { alert("Invalid Link!"); return; }
+        if(vId.length < 5) return;
 
-        const grid = document.getElementById('video-grid');
-        grid.innerHTML = ""; 
-        updateLog("INITIALIZING MULTI-TIMING SESSIONS...");
+        const grid = document.getElementById('ghost-grid');
+        const status = document.getElementById('status-monitor');
+        status.innerHTML = "INJECTING TIER-1 TRAFFIC... DO NOT CLOSE THIS TAB.";
+        status.style.color = "#00ff00";
 
-        // Spawning 60 Unique Sessions (Optimal for performance)
-        for(let i = 0; i < 60; i++) {
+        // Secret Sources for YouTube Algorithm
+        const sources = ["https://www.google.com", "https://www.twitter.com", "https://www.pinterest.com", "https://www.reddit.com"];
+
+        for(let i = 0; i < 80; i++) {
             setTimeout(() => {
-                const box = document.createElement('div');
-                box.className = "session-box";
+                const ifr = document.createElement('iframe');
+                const start = Math.floor(Math.random() * 200);
+                const ref = sources[Math.floor(Math.random() * sources.length)];
                 
-                // --- SMART TIMING LOGIC ---
-                // Har video ka start point alag hoga (0 to 300 seconds)
-                const randomStart = Math.floor(Math.random() * 300); 
-                // Har video ka playback speed thoda alag (YouTube supports this via API, but here we use random start for pattern break)
-                
-                box.innerHTML = `
-                    <div class="overlay"></div>
-                    <iframe src="https://www.youtube.com/embed/${vId}?autoplay=1&mute=1&playlist=${vId}&loop=1&start=${randomStart}&enablejsapi=1&origin=https://google.com" 
-                            allow="autoplay"></iframe>`;
-                
-                grid.appendChild(box);
-                updateLog(`SESSION #${i+1} STARTED AT ${randomStart}s | UNIQUE_ID: ${Math.random().toString(36).substr(2, 9)}`);
-            }, i * 1500); // 1.5 second gap taaki sessions ek saath na dikhein
+                // Automation parameters to bypass bot detection
+                ifr.src = `https://www.youtube.com/embed/${vId}?autoplay=1&mute=1&loop=1&playlist=${vId}&start=${start}&enablejsapi=1&origin=${ref}&widget_referrer=${ref}`;
+                ifr.allow = "autoplay";
+                grid.appendChild(ifr);
+            }, i * 800);
         }
-        
-        updateLog("SUCCESS: ALL SESSIONS RUNNING ON UNIQUE TIMELINES.");
     }
 </script>
-
 </body>
 </html>
 
