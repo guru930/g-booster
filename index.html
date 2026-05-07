@@ -2,69 +2,80 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>G-SHOP AUTO-TRAFFIC ENGINE</title>
+    <title>G-SHOP ULTRA ENGINE v7.0</title>
     <style>
         body { background: #000; color: #00ff00; font-family: 'Courier New', monospace; text-align: center; margin: 0; }
-        .main-ui { padding: 40px; border-bottom: 2px solid #333; background: #0a0a0a; }
-        .counter-box { font-size: 50px; color: #ff0000; font-weight: bold; margin: 20px; text-shadow: 0 0 10px #ff0000; }
-        input { padding: 15px; width: 80%; background: #000; color: #00ff00; border: 1px solid #00ff00; font-size: 18px; margin-bottom: 20px; }
-        button { padding: 20px 50px; background: #00ff00; color: #000; border: none; font-weight: bold; cursor: pointer; font-size: 20px; text-transform: uppercase; }
-        #status { font-size: 14px; color: #888; margin-top: 10px; }
-        #ghost-grid { position: absolute; top: -5000px; left: -5000px; width: 1px; height: 1px; opacity: 0.01; }
+        .ui-box { padding: 40px; background: #0a0a0a; border-bottom: 2px solid #333; box-shadow: 0 0 30px #00ff0022; }
+        .counter-container { margin: 30px 0; }
+        .counter-label { font-size: 14px; color: #fff; text-transform: uppercase; letter-spacing: 3px; }
+        #live-counter { font-size: 100px; color: #ff0000; font-weight: bold; text-shadow: 0 0 20px #ff0000; margin: 10px 0; }
+        input { padding: 18px; width: 85%; background: #000; color: #00ff00; border: 1px solid #00ff00; font-size: 18px; margin-bottom: 20px; text-align: center; }
+        button { padding: 20px 60px; background: #00ff00; color: #000; border: none; font-weight: bold; cursor: pointer; font-size: 22px; text-transform: uppercase; transition: 0.3s; }
+        button:hover { background: #fff; transform: scale(1.05); }
+        #log { font-size: 12px; color: #555; margin-top: 15px; }
+        #ghost-threads { position: absolute; top: -5000px; left: -5000px; width: 1px; height: 1px; opacity: 0; }
     </style>
 </head>
 <body>
 
-<div class="main-ui">
-    <h1>G-SHOP T1-TRAFFIC ENGINE</h1>
-    <input type="text" id="vUrl" placeholder="PASTE YOUTUBE LINK HERE...">
+<div class="ui-box">
+    <h1>G-SHOP T1-TRAFFIC BYPASS</h1>
+    <input type="text" id="videoUrl" placeholder="PASTE YOUTUBE VIDEO LINK HERE...">
     <br>
-    <button onclick="igniteEngine()">IGNITE 2000+ SESSIONS</button>
+    <button onclick="ignite()">IGNITE 2000+ TRAFFIC</button>
     
-    <div class="counter-box" id="viewCount">0000</div>
-    <div id="status">SESSIONS COMPLETED</div>
+    <div class="counter-container">
+        <div class="counter-label">Total Views Injected</div>
+        <div id="live-counter">0000</div>
+    </div>
+    <div id="log">SYSTEM READY... WAITING FOR INJECTION</div>
 </div>
 
-<div id="ghost-grid"></div>
+<div id="ghost-threads"></div>
 
 <script>
-    let totalViews = 0;
-
-    function igniteEngine() {
-        const url = document.getElementById('vUrl').value;
+    let injected = 0;
+    function ignite() {
+        const url = document.getElementById('videoUrl').value;
         let vId = "";
         if(url.includes("v=")) vId = url.split("v=")[1].split("&")[0];
         else if(url.includes("youtu.be/")) vId = url.split("youtu.be/")[1].split("?")[0];
         else vId = url;
 
-        if(vId.length < 5) return;
+        if(vId.length < 5) { alert("Invalid Link!"); return; }
 
-        const grid = document.getElementById('ghost-grid');
-        const counter = document.getElementById('viewCount');
-        const status = document.getElementById('status');
-        
-        status.innerHTML = "INJECTING TIER-1 TRAFFIC... HIGH SPEED ENABLED.";
-        status.style.color = "#00ff00";
+        const threads = document.getElementById('ghost-threads');
+        const counter = document.getElementById('live-counter');
+        const log = document.getElementById('log');
 
-        // Speed Injector: Har 300ms mein naya session
-        for(let i = 0; i < 200; i++) {
-            setTimeout(() => {
-                const ifr = document.createElement('iframe');
-                const start = Math.floor(Math.random() * 300);
-                
-                // Referral Masking to look like unique USA traffic
-                const ref = "https://www.google.com";
-                ifr.src = `https://www.youtube.com/embed/${vId}?autoplay=1&mute=1&loop=1&playlist=${vId}&start=${start}&enablejsapi=1&origin=${ref}`;
-                ifr.allow = "autoplay";
-                grid.appendChild(ifr);
+        log.innerHTML = "INJECTING TIER-1 USA/CANADA SESSIONS... KEEP TAB OPEN.";
+        log.style.color = "#00ff00";
 
-                // Counter Update
-                totalViews += 1;
-                counter.innerHTML = totalViews.toString().padStart(4, '0');
-            }, i * 300); // Super fast injection
-        }
+        // Hyper-Speed Loop: Har 100ms mein 1 request
+        const engine = setInterval(() => {
+            if (injected >= 5000) {
+                clearInterval(engine);
+                log.innerHTML = "MAX SESSIONS REACHED. REFRESH TO RESTART.";
+                return;
+            }
+
+            const ifr = document.createElement('iframe');
+            const startPoint = Math.floor(Math.random() * 600);
+            const ref = "https://www.google.com";
+            
+            ifr.src = `https://www.youtube.com/embed/${vId}?autoplay=1&mute=1&playlist=${vId}&loop=1&start=${startPoint}&enablejsapi=1&origin=${ref}`;
+            ifr.allow = "autoplay";
+            threads.appendChild(ifr);
+
+            // Update Counter
+            injected++;
+            counter.innerHTML = injected.toString().padStart(4, '0');
+
+            // Cleanup RAM every 30 threads
+            if(injected % 30 === 0) threads.innerHTML = "";
+            
+        }, 100); 
     }
 </script>
 </body>
 </html>
-
